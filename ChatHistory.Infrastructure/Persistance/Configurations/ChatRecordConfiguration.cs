@@ -15,7 +15,7 @@ namespace ChatHistory.Infrastructure.Persistance.Configurations
 
             builder.Property(x => x.ChatEventType).IsRequired();
 
-            builder.Property(x => x.Time).IsRequired().ValueGeneratedOnAddOrUpdate();
+            builder.Property(x => x.Time).IsRequired();
 
             builder.HasOne(x => x.Sender)
                 .WithMany(u => u.SentChatRecords)

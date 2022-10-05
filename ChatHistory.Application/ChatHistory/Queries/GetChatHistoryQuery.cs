@@ -17,9 +17,10 @@ namespace ChatHistory.Application.ChatHistory.Queries
     /// </summary>
     public record GetChatHistoryQuery : IRequest<IEnumerable<ChatRecord>>
     {
-        public int SenderId { get; set; }
-        public int ReceiverId { get; set; }
-        //public ChatEventType ChatEventType { get; set; }
+        public AggregationLevel AggregationLevel { get; set; } = AggregationLevel.None;
+        public int Page { get; set; } = 1;
+        public int Take { get; set; } = 10;
+
     }
 
     /// <summary>
@@ -40,9 +41,28 @@ namespace ChatHistory.Application.ChatHistory.Queries
         {
             try
             {
-                var chatHistory = await _context.ChatRecords.Include(cr => cr.Sender).Include(cr => cr.Receiver).AsNoTracking().OrderBy(cr => cr.Id).ToListAsync();
-
-                return chatHistory;
+                if (request.AggregationLevel == AggregationLevel.None)
+                {
+                    var chatHistory = await _context.ChatRecords.AsNoTracking()
+                        .Include(cr => cr.Sender)
+                        .Include(cr => cr.Receiver)
+                        .OrderBy(cr => cr.Time)
+                        .Skip((request.Page - 1) * request.Take)
+                        .Take(request.Take)
+                        .ToListAsync();
+                    return chatHistory;
+                }
+                else
+                {
+                    var chatHistory = await _context.ChatRecords.AsNoTracking()
+                        .Include(cr => cr.Sender)
+                        .Include(cr => cr.Receiver)
+                        .OrderBy(cr => cr.Time)
+                        .Skip((request.Page - 1) * request.Take)
+                        .Take(request.Take)
+                        .ToListAsync();
+                    return chatHistory;
+                }
             }
             catch (Exception ex)
             {

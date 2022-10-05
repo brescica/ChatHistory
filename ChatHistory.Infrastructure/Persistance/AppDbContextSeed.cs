@@ -20,7 +20,7 @@ namespace ChatHistory.Infrastructure.Persistance
             {
                 var user1 = new User
                 {
-                    Username = "Ante"
+                    Username = "Ante",
                 };
                 var user2 = new User
                 {
@@ -29,37 +29,72 @@ namespace ChatHistory.Infrastructure.Persistance
                 var enter1 = new ChatRecord
                 {
                     Sender = user1,
-                    ChatEventType = Domain.Enums.ChatEventType.EnterRoom
+                    ChatEventType = Domain.Enums.ChatEventType.EnterRoom,
+                    Time = DateTime.Parse("2022-10-04T21:32:51.4663136Z")
                 };
                 var enter2 = new ChatRecord
                 {
                     Sender = user2,
-                    ChatEventType = Domain.Enums.ChatEventType.EnterRoom
+                    ChatEventType = Domain.Enums.ChatEventType.EnterRoom,
+                    Time = DateTime.Parse("2022-10-04T21:33:51.4663136Z")
                 };
                 var highFive1to2 = new ChatRecord
                 {
                     Sender = user1,
                     Receiver = user2,
-                    ChatEventType = Domain.Enums.ChatEventType.HighFive
+                    ChatEventType = Domain.Enums.ChatEventType.HighFive,
+                    Time = DateTime.Parse("2022-10-04T21:34:51.4663136Z")
+                };
+                var highFive1to2_2 = new ChatRecord
+                {
+                    Sender = user1,
+                    Receiver = user2,
+                    ChatEventType = Domain.Enums.ChatEventType.HighFive,
+                    Time = DateTime.Parse("2022-10-04T21:35:51.4663136Z")
                 };
                 var message1 = new ChatRecord
                 {
                     Sender = user1,
                     Receiver = user2,
-                    Comment = "Hi",
-                    ChatEventType = Domain.Enums.ChatEventType.Comment
+                    Comment = "Hello",
+                    ChatEventType = Domain.Enums.ChatEventType.Comment,
+                    Time = DateTime.Parse("2022-10-04T21:36:51.4663136Z")
                 };
-                var leave1 = new ChatRecord
+                var message2 = new ChatRecord
                 {
                     Sender = user1,
-                    ChatEventType = Domain.Enums.ChatEventType.LeaveRoom
+                    Receiver = user2,
+                    Comment = "Hello again",
+                    ChatEventType = Domain.Enums.ChatEventType.Comment,
+                    Time = DateTime.Parse("2022-10-04T21:36:52.4663136Z")
+                };
+                var highFive2to1 = new ChatRecord
+                {
+                    Sender = user2,
+                    Receiver = user1,
+                    ChatEventType = Domain.Enums.ChatEventType.HighFive,
+                    Time = DateTime.Parse("2022-10-04T21:37:51.4663136Z")
+                };
+                var message3 = new ChatRecord
+                {
+                    Sender = user2,
+                    Receiver = user1,
+                    Comment = "Hello again",
+                    ChatEventType = Domain.Enums.ChatEventType.Comment,
+                    Time = DateTime.Parse("2022-10-04T21:37:55.4663136Z")
                 };
                 var leave2 = new ChatRecord
                 {
                     Sender = user2,
-                    ChatEventType = Domain.Enums.ChatEventType.LeaveRoom
+                    ChatEventType = Domain.Enums.ChatEventType.LeaveRoom,
+                    Time = DateTime.Parse("2022-10-04T21:38:51.4663136Z")
                 };
-
+                var leave1 = new ChatRecord
+                {
+                    Sender = user1,
+                    ChatEventType = Domain.Enums.ChatEventType.LeaveRoom,
+                    Time = DateTime.Parse("2022-10-04T21:39:51.4663136Z")
+                };
                 // seed users
                 if (!_context.Users.Any())
                 {
@@ -72,7 +107,7 @@ namespace ChatHistory.Infrastructure.Persistance
                 if (!_context.ChatRecords.Any())
                 {
                     _context.ChatRecords.AddRange(
-                        enter1, enter2, highFive1to2, message1, leave2, leave1
+                        enter1, enter2, highFive1to2, highFive1to2_2, message1, message2, highFive2to1, message3, leave2, leave1
                     );
 
                     await _context.SaveChangesAsync();

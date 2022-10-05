@@ -4,15 +4,17 @@ namespace ChatHistory.Domain.Enums
 {
     public enum AggregationLevel
     {
+        [Description("None")]
+        None = 0,
         [Description("Minute")]
-        Minute = 0,
+        Minute = 1,
         [Description("Hour")]
-        Hour = 1,
+        Hour = 2,
         [Description("Day")]
-        Day = 2,
+        Day = 3,
         [Description("Week")]
-        Week = 3,
+        Week = 4,
         [Description("Month")]
-        Month = 4
+        Month = 5
     }
 }
