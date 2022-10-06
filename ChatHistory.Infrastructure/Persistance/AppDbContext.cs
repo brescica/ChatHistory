@@ -1,4 +1,4 @@
-﻿using ChatHistory.Application.Persistance;
+﻿using ChatHistory.Application.Persistance.Interfaces;
 using ChatHistory.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;

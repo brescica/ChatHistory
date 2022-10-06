@@ -1,4 +1,4 @@
-﻿namespace ChatHistory.API.Dtos
+﻿namespace ChatHistory.API.Dtos.User
 {
     public class UserDto : BaseDto
     {

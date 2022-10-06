@@ -1,8 +1,8 @@
-﻿using ChatHistory.Application.Persistance;
-using ChatHistory.Infrastructure.Persistance;
+﻿using ChatHistory.Infrastructure.Persistance;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
+using ChatHistory.Application.Persistance.Interfaces;
 
 namespace ChatHistory.Infrastructure
 {
@@ -17,8 +17,6 @@ namespace ChatHistory.Infrastructure
             }
 
             services.AddScoped<IAppDbContext>(provider => provider.GetRequiredService<AppDbContext>());
-            //services.AddScoped<IToDoTaskProvider, ToDoTaskProvider>();
-
             services.AddScoped<AppDbContextSeed>();
 
             return services;

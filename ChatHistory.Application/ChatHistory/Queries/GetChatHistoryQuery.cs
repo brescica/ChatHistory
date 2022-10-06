@@ -1,14 +1,8 @@
-﻿using ChatHistory.Application.Persistance;
+﻿using ChatHistory.Application.Persistance.Interfaces;
 using ChatHistory.Domain.Entities;
-using ChatHistory.Domain.Enums;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ChatHistory.Application.ChatHistory.Queries
 {
@@ -17,14 +11,13 @@ namespace ChatHistory.Application.ChatHistory.Queries
     /// </summary>
     public record GetChatHistoryQuery : IRequest<IEnumerable<ChatRecord>>
     {
-        public AggregationLevel AggregationLevel { get; set; } = AggregationLevel.None;
         public int Page { get; set; } = 1;
         public int Take { get; set; } = 10;
 
     }
 
     /// <summary>
-    /// Mediator handler for GetDistanceQuery
+    /// Mediator handler for GetChatHistoryQuery
     /// </summary>
     public class GetChatHistoryQueryHandler : IRequestHandler<GetChatHistoryQuery, IEnumerable<ChatRecord>>
     {
@@ -41,8 +34,6 @@ namespace ChatHistory.Application.ChatHistory.Queries
         {
             try
             {
-                if (request.AggregationLevel == AggregationLevel.None)
-                {
                     var chatHistory = await _context.ChatRecords.AsNoTracking()
                         .Include(cr => cr.Sender)
                         .Include(cr => cr.Receiver)
@@ -51,18 +42,6 @@ namespace ChatHistory.Application.ChatHistory.Queries
                         .Take(request.Take)
                         .ToListAsync();
                     return chatHistory;
-                }
-                else
-                {
-                    var chatHistory = await _context.ChatRecords.AsNoTracking()
-                        .Include(cr => cr.Sender)
-                        .Include(cr => cr.Receiver)
-                        .OrderBy(cr => cr.Time)
-                        .Skip((request.Page - 1) * request.Take)
-                        .Take(request.Take)
-                        .ToListAsync();
-                    return chatHistory;
-                }
             }
             catch (Exception ex)
             {

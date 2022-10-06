@@ -1,6 +1,7 @@
-﻿using ChatHistory.Domain.Enums;
+﻿using ChatHistory.API.Dtos.User;
+using ChatHistory.Domain.Enums;
 
-namespace ChatHistory.API.Dtos
+namespace ChatHistory.API.Dtos.ChatRecord
 {
     public class ChatRecordDto : BaseDto
     {

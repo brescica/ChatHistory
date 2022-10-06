@@ -1,14 +1,13 @@
 ﻿using AutoMapper;
-using ChatHistory.Domain.Entities;
 
-namespace ChatHistory.API.Dtos
+namespace ChatHistory.API.Dtos.ChatRecord
 {
     public class ChatRecordProfile : Profile
     {
         public ChatRecordProfile()
         {
-            CreateMap<ChatRecord, ChatRecordDto>();
+            CreateMap<Domain.Entities.ChatRecord, ChatRecordDto>();
         }
-        
+
     }
 }
