@@ -3,6 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using ChatHistory.Application.Persistance.Interfaces;
+using ChatHistory.Infrastructure.Persistance.Providers;
 
 namespace ChatHistory.Infrastructure
 {
@@ -18,6 +19,8 @@ namespace ChatHistory.Infrastructure
 
             services.AddScoped<IAppDbContext>(provider => provider.GetRequiredService<AppDbContext>());
             services.AddScoped<AppDbContextSeed>();
+
+            services.AddScoped<IChatHistoryProvider, ChatHistoryProvider>();
 
             return services;
         }

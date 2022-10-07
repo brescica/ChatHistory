@@ -2,7 +2,7 @@
 using ChatHistory.Application.Persistance.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
-namespace ChatHistory.Application.Persistance.Providers
+namespace ChatHistory.Infrastructure.Persistance.Providers
 {
     public class ChatHistoryProvider : IChatHistoryProvider
     {
