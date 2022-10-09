@@ -1,5 +1,6 @@
 ﻿using ChatHistory.Application.Models;
 using ChatHistory.Application.Persistance.Interfaces;
+using ChatHistory.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace ChatHistory.Infrastructure.Persistance.Providers
@@ -12,6 +13,20 @@ namespace ChatHistory.Infrastructure.Persistance.Providers
         {
             _context = context;
         }
+
+
+
+        public async Task<IEnumerable<ChatRecord>> GetPaginatedChatRecords(int page, int take)
+        {
+            return await _context.ChatRecords.AsNoTracking()
+                .Include(cr => cr.Sender)
+                .Include(cr => cr.Receiver)
+                .OrderBy(cr => cr.Time)
+                .Skip((page - 1) * take)
+                .Take(take)
+                .ToListAsync();
+        }
+
         public async Task<List<GroupedChatHistory>> GetMonthAggregatedChatHistory()
         {
             return await _context.ChatRecords.AsNoTracking()

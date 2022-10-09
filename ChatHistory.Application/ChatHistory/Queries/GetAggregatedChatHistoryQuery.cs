@@ -47,7 +47,7 @@ namespace ChatHistory.Application.ChatHistory.Queries
 
                 Dictionary<string, List<AggregatedChatResult>> aggregatedResult = new Dictionary<string, List<AggregatedChatResult>>();
 
-                foreach (GroupedChatHistory? group in groupedByDateTimeAndEventType)
+                foreach (GroupedChatHistory group in groupedByDateTimeAndEventType)
                 {
                     var key = DateTimeFormater.FormatDateTimeToString(group.Time, request.AggregationLevel);
 

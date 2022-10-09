@@ -1,7 +1,6 @@
 ﻿using ChatHistory.Application.Persistance.Interfaces;
 using ChatHistory.Domain.Entities;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace ChatHistory.Application.ChatHistory.Queries
@@ -22,26 +21,19 @@ namespace ChatHistory.Application.ChatHistory.Queries
     public class GetChatHistoryQueryHandler : IRequestHandler<GetChatHistoryQuery, IEnumerable<ChatRecord>>
     {
         private readonly ILogger<GetChatHistoryQueryHandler> _logger;
-        private readonly IAppDbContext _context;
+        private readonly IChatHistoryProvider _chatHistoryProvider;
 
-        public GetChatHistoryQueryHandler(ILogger<GetChatHistoryQueryHandler> logger, IAppDbContext context)
+        public GetChatHistoryQueryHandler(ILogger<GetChatHistoryQueryHandler> logger, IChatHistoryProvider chatHistoryProvider)
         {
             _logger = logger;
-            _context = context;
+            _chatHistoryProvider = chatHistoryProvider;
         }
 
         public async Task<IEnumerable<ChatRecord>> Handle(GetChatHistoryQuery request, CancellationToken cancellationToken)
         {
             try
             {
-                    var chatHistory = await _context.ChatRecords.AsNoTracking()
-                        .Include(cr => cr.Sender)
-                        .Include(cr => cr.Receiver)
-                        .OrderBy(cr => cr.Time)
-                        .Skip((request.Page - 1) * request.Take)
-                        .Take(request.Take)
-                        .ToListAsync();
-                    return chatHistory;
+                return await _chatHistoryProvider.GetPaginatedChatRecords(request.Page, request.Take);
             }
             catch (Exception ex)
             {
