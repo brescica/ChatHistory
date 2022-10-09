@@ -1,10 +1,8 @@
 ﻿using ChatHistory.Application.Common.Helpers;
 using ChatHistory.Application.Models;
 using ChatHistory.Application.Persistance.Interfaces;
-using ChatHistory.Domain.Entities;
 using ChatHistory.Domain.Enums;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace ChatHistory.Application.ChatHistory.Queries
